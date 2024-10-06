@@ -1,6 +1,8 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
 
+import {IPhotoData } from "../../App"
+
 export default function ImageGallery({
   arrayOfPhotos,
   openModal,
@@ -9,21 +11,11 @@ export default function ImageGallery({
   return (
     <ul className={css.imageList}>
       {arrayOfPhotos.map(
-        ({
-          likes,
-          alt_description,
-          description,
-          id,
-          urls: { regular, small },
-        }) => {
+        (photo:IPhotoData) => {
           return (
-            <li key={id}>
+            <li key={photo.id}>
               <ImageCard
-                likes={likes}
-                altDescription={alt_description}
-                urlSmall={small}
-                urlRegular={regular}
-                description={description}
+                photoData={photo}
                 onOpenModal={openModal}
                 dataForModal={dataForModal}
               />

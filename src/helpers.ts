@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export default async function getPhotos(value, page = 1) {
+  
+export default async function getPhotos<DataType>(
+  value: string,
+  page: number = 1
+): Promise<DataType> {
   const URL = "https://api.unsplash.com/search/photos";
   const params = {
     client_id: "CdjgVXS8Gvc-erCPUMkWL554IwcLueiwHparrTjhEjo",
@@ -9,5 +13,7 @@ export default async function getPhotos(value, page = 1) {
     page,
   };
 
-  return await axios.get(URL, { params });
+   const {data} = await axios.get(URL, { params });
+  
+  return data;
 }
