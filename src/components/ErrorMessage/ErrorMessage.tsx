@@ -1,6 +1,7 @@
-export default function ErrorMessage(error) {
-  console.log(error);
+const ErrorMessage = () => {
   return (
     <h2>Ooooops.... This is error.... Don`t worry, just try reload the page</h2>
   );
-}
+};
+
+export default ErrorMessage;

@@ -26,13 +26,16 @@ export interface IPhotoData {
   };
   likes: number;
 }
-
-interface IDataForModal{
-    src: string,
-    likes: number,
-    altDescription: string|null,
-    description: string|null
-}
+const initialDataForModal = {
+  id: "",
+  description: "",
+  alt_description: "",
+  urls: {
+    regular: "",
+    small: "",
+  },
+  likes: 0,
+};
 
 function App() {
   const [photos, setPhotos] = useState<IPhotoData[]>([]);
@@ -42,8 +45,8 @@ function App() {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const [dataForModal, setDataForModal] = useState<IDataForModal|null>(null);
-
+  const [dataForModal, setDataForModal] =
+    useState<IPhotoData>(initialDataForModal);
 
   useEffect(() => {
     if (imgForSearch === "") {
@@ -64,30 +67,21 @@ function App() {
 
         setTotalPages(respons.total_pages);
         setPhotos((prev) => [...prev, ...respons.results]);
-
       } catch (error) {
-
         toast.error("Something is wrong... Try reload this page, please");
         console.log(error, "in catch");
         setError(true);
-
       } finally {
         setLoading(false);
       }
     };
 
     fetchSearchigValue(imgForSearch, page);
-
   }, [imgForSearch, page]);
 
   const searchImg = (img: string) => setImgForSearch(img);
 
-  const dataModal = (
-    src: string,
-    likes: number,
-    altDescription: string|null,
-    description: string|null
-  ) => setDataForModal({ src, likes, altDescription, description });
+  const dataModal = (dataForModal: IPhotoData) => setDataForModal(dataForModal);
 
   function openModal() {
     setIsOpen(true);

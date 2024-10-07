@@ -3,21 +3,35 @@ import css from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
 
-export default function ImageModal({
+import { IPhotoData } from "../../App";
+
+interface ImageModalProps {
+  dataForModal: IPhotoData;
+  onCloseModal: () => void;
+  modalIsOpen: boolean;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({
   dataForModal,
   onCloseModal,
   modalIsOpen,
-}) {
+}) => {
   return (
     <>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={onCloseModal}
-        dataForModal={dataForModal}
         className={css.modal}
         overlayClassName={css.overlay}
       >
-        <img src={dataForModal.src} alt={dataForModal.altDescription} />
+        <img
+          src={dataForModal.urls.regular}
+          alt={
+            dataForModal.alt_description
+              ? dataForModal.alt_description
+              : "There is no description"
+          }
+        />
 
         <div className={css.describe}>
           <p>{dataForModal.description}</p>
@@ -27,4 +41,6 @@ export default function ImageModal({
       </Modal>
     </>
   );
-}
+};
+
+export default ImageModal;
